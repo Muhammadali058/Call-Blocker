@@ -3,11 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/drawable/ic_call_made.xml" value="0.1255" />
+        <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/drawable/ic_call_missed.xml" value="0.1255" />
+        <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/drawable/ic_call_received.xml" value="0.1255" />
         <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/layout/call_logs_groups_holder.xml" value="0.25" />
         <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/layout/call_logs_holder.xml" value="0.25" />
         <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/layout/fragment_blocked_numbers.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/layout/fragment_call_logs.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/layout/fragment_silent_numbers.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/layout/popup_dialog.xml" value="0.271875" />
+        <entry key="..\:/Users/HP/Documents/AndroidStudioProjects/CallBlocker/app/src/main/res/menu/menu.xml" value="0.27291666666666664" />
       </map>
     </option>
   </component>

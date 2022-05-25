@@ -1,10 +1,12 @@
 package com.example.callblocker.Adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ public class CallLogsAdapter extends RecyclerView.Adapter<CallLogsAdapter.ViewHo
 
     Context context;
     List<CallLogs> list;
+    int selectedPos = -1;
 
     public CallLogsAdapter(Context context, List<CallLogs> list) {
         this.context = context;
@@ -39,25 +42,46 @@ public class CallLogsAdapter extends RecyclerView.Adapter<CallLogsAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CallLogs logs = list.get(position);
 
-        holder.binding.name.setText(logs.getName());
-        holder.binding.number.setText(logs.getNumber());
+        if(TextUtils.isEmpty(logs.getName())){
+            holder.binding.name.setText(logs.getNumber());
+        }else {
+            holder.binding.name.setText(logs.getName());
+        }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
         holder.binding.date.setText(sdf.format(new Date(logs.getDate())));
-
-//        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-//        holder.binding.date.setText(sdf.format(new Date(logs.getDate())));
 
         switch (logs.getType()){
             case 1:
                 holder.binding.icon.setImageResource(R.drawable.ic_call_received);
+                holder.binding.type.setText("Received");
                 break;
             case 2:
                 holder.binding.icon.setImageResource(R.drawable.ic_call_made);
+                holder.binding.type.setText("Dialed");
                 break;
             case 5:
                 holder.binding.icon.setImageResource(R.drawable.ic_call_missed);
+                holder.binding.type.setText("Missed");
                 break;
+        }
+
+        final int pos = position;
+        holder.binding.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(selectedPos == pos)
+                    selectedPos = -1;
+                else
+                    selectedPos = pos;
+
+                notifyDataSetChanged();
+            }
+        });
+        if(position == selectedPos){
+            holder.binding.expandableLayout.setVisibility(View.VISIBLE);
+        }else {
+            holder.binding.expandableLayout.setVisibility(View.GONE);
         }
     }
 
@@ -77,10 +101,6 @@ public class CallLogsAdapter extends RecyclerView.Adapter<CallLogsAdapter.ViewHo
             super(itemView);
             binding = CallLogsHolderBinding.bind(itemView);
         }
-    }
-
-    private String getDuration(long seconds){
-        return "";
     }
 
 }
