@@ -7,11 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.callblocker.Dao.AppDatabase;
+import com.example.callblocker.Models.AllowedNumbers;
+import com.example.callblocker.Models.BlockedNumbers;
 import com.example.callblocker.Models.CallLogs;
+import com.example.callblocker.Models.SilentNumbers;
 import com.example.callblocker.R;
 import com.example.callblocker.databinding.CallLogsHolderBinding;
 
@@ -25,10 +30,13 @@ public class CallLogsAdapter extends RecyclerView.Adapter<CallLogsAdapter.ViewHo
     Context context;
     List<CallLogs> list;
     int selectedPos = -1;
+    AppDatabase db;
 
     public CallLogsAdapter(Context context, List<CallLogs> list) {
         this.context = context;
         this.list = list;
+
+        db = AppDatabase.getInstance(context);
     }
 
     @NonNull
@@ -83,6 +91,70 @@ public class CallLogsAdapter extends RecyclerView.Adapter<CallLogsAdapter.ViewHo
         }else {
             holder.binding.expandableLayout.setVisibility(View.GONE);
         }
+        
+        holder.binding.callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Call", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.binding.blockBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToList(logs, "block");
+            }
+        });
+
+        holder.binding.silentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToList(logs, "silent");
+            }
+        });
+
+        holder.binding.allowedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToList(logs, "white");
+            }
+        });
+    }
+
+    private void addToList(CallLogs logs, String whatToDo){
+        List<BlockedNumbers> blocked = db.blockNumbersDao().getAllByNumber(logs.getNumber());
+        List<SilentNumbers> silent = db.silentNumbersDao().getAllByNumber(logs.getNumber());
+        List<AllowedNumbers> allowed = db.allowedNumbersDao().getAllByNumber(logs.getNumber());
+        if(blocked.size() > 0){
+            Toast.makeText(context, "Number exists in black list", Toast.LENGTH_SHORT).show();
+        }else if (silent.size() > 0){
+            Toast.makeText(context, "Number exists in silent list", Toast.LENGTH_SHORT).show();
+        }else if (allowed.size() > 0){
+            Toast.makeText(context, "Number exists in white list", Toast.LENGTH_SHORT).show();
+        }else {
+            switch (whatToDo){
+                case "block":
+                    db.blockNumbersDao().insert(
+                            new BlockedNumbers(logs.getName(), logs.getNumber())
+                    );
+                    Toast.makeText(context, "Number blocked", Toast.LENGTH_SHORT).show();
+                    break;
+                case "silent":
+                    db.silentNumbersDao().insert(
+                            new SilentNumbers(logs.getName(), logs.getNumber())
+                    );
+                    Toast.makeText(context, "Number silent", Toast.LENGTH_SHORT).show();
+                    break;
+                case "white":
+                    db.allowedNumbersDao().insert(
+                            new AllowedNumbers(logs.getName(), logs.getNumber())
+                    );
+                    Toast.makeText(context, "Number added to whitelist", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
+        }
+
     }
 
     @Override

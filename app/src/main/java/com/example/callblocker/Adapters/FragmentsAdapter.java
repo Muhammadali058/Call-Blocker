@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.callblocker.Fragments.BlockedNumbersFragment;
 import com.example.callblocker.Fragments.CallLogsFragment;
 import com.example.callblocker.Fragments.SilentNumbersFragment;
+import com.example.callblocker.Fragments.AllowedNumbersFragment;
 
 public class FragmentsAdapter extends FragmentStateAdapter {
 
@@ -25,6 +26,8 @@ public class FragmentsAdapter extends FragmentStateAdapter {
                 return new BlockedNumbersFragment();
             case 2:
                 return new SilentNumbersFragment();
+            case 3:
+                return new AllowedNumbersFragment();
             default:
                 return new CallLogsFragment();
         }
@@ -32,6 +35,6 @@ public class FragmentsAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

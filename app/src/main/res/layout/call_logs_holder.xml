@@ -94,11 +94,14 @@
                 android:background="@color/divider" />
 
             <LinearLayout
+                android:id="@+id/messageBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="7dp">
+                android:paddingVertical="7dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -109,47 +112,76 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Send a message" />
+                    android:text="Message" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/blockBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="7dp">
+                android:paddingVertical="7dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_message" />
+                    android:src="@drawable/ic_block" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Send a message" />
+                    android:text="Block" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/silentBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="7dp">
+                android:paddingVertical="7dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_message" />
+                    android:src="@drawable/ic_silent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Send a message" />
+                    android:text="Silent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/allowedBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="7dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_whitelist" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Add to whitelist" />
 
             </LinearLayout>
 

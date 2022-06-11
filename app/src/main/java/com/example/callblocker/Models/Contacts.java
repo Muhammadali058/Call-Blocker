@@ -4,14 +4,14 @@ import androidx.annotation.NonNull;
 
 public class Contacts {
     public String name;
-    public String phoneNumber;
+    public String number;
 
     public Contacts() {
     }
 
-    public Contacts(String name, String phoneNumber ) {
+    public Contacts(String name, String number) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
+        this.number = number;
     }
 
     public String getName() {
@@ -22,12 +22,12 @@ public class Contacts {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     @NonNull

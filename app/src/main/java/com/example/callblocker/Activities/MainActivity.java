@@ -18,11 +18,13 @@ import android.os.Bundle;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.callblocker.Adapters.FragmentsAdapter;
 import com.example.callblocker.Models.CallLogs;
 import com.example.callblocker.Models.Contacts;
+import com.example.callblocker.R;
 import com.example.callblocker.databinding.ActivityMainBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     FragmentsAdapter fragmentsAdapter;
+    boolean isBlockMode = false;
+    boolean isSilentMode = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +47,54 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         checkPermissions();
-        init();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+                init();
+            }
+        }
+
     }
 
     private void init(){
+        binding.blockModeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isBlockMode){
+                    isBlockMode = false;
+                    isSilentMode = false;
+                    binding.blockModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
+                    binding.silentModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
+                }else {
+                    isBlockMode = true;
+                    isSilentMode = false;
+                    binding.blockModeBtn.setBackgroundColor(getResources().getColor(R.color.primary));
+                    binding.silentModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
+                }
+            }
+        });
+
+        binding.silentModeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isSilentMode){
+                    isBlockMode = false;
+                    isSilentMode = false;
+                    binding.blockModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
+                    binding.silentModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
+                }else {
+                    isBlockMode = false;
+                    isSilentMode = true;
+                    binding.blockModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
+                    binding.silentModeBtn.setBackgroundColor(getResources().getColor(R.color.primary));
+                }
+            }
+        });
+
+
         fragmentsAdapter = new FragmentsAdapter(this);
         binding.viewPager2.setAdapter(fragmentsAdapter);
-        binding.viewPager2.setOffscreenPageLimit(3);
+//        binding.viewPager2.setOffscreenPageLimit(3);
 
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tabLayout, binding.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -63,10 +109,18 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         tab.setText("Silent");
                         break;
+                    case 3:
+                        tab.setText("Whitelist");
+                        break;
                 }
             }
         });
         tabLayoutMediator.attach();
+    }
+
+    private void changeButtonColor(){
+
+
 
     }
 
@@ -171,7 +225,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS));
             }
         }
-
     }
 
     @Override
@@ -179,8 +232,10 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == 123){
             if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this, "Please allow work properly.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please allow to work properly.", Toast.LENGTH_SHORT).show();
                 checkPermissions();
+            }else {
+                init();
             }
         }
     }

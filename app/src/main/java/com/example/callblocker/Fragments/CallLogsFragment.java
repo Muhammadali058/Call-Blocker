@@ -1,16 +1,21 @@
 package com.example.callblocker.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.provider.CallLog;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.callblocker.Adapters.CallLogsAdapter;
 import com.example.callblocker.Adapters.CallLogsGroupedAdapter;

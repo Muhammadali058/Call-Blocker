@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.BlockedNumbersFragment"
+    tools:context=".Fragments.AllowedNumbersFragment"
     android:orientation="vertical"
     android:background="@color/light">
 
@@ -12,6 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
-        tools:listitem="@layout/blocked_numbers_holder"/>
+        tools:listitem="@layout/allowed_numbers_holder"/>
 
 </LinearLayout>
