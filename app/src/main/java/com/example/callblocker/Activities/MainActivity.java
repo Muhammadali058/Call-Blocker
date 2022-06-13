@@ -10,6 +10,7 @@ import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentsAdapter fragmentsAdapter;
     boolean isBlockMode = false;
     boolean isSilentMode = false;
-
+    SharedPreferences prefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        isBlockMode = prefs.getBoolean("isBlockMode", false);
+        isSilentMode = prefs.getBoolean("isSilentMode", false);
+
+        if(isBlockMode){
+            binding.blockModeBtn.setBackgroundColor(getResources().getColor(R.color.primary));
+            binding.silentModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
+        }else if(isSilentMode){
+            binding.blockModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
+            binding.silentModeBtn.setBackgroundColor(getResources().getColor(R.color.primary));
+        }
+
         binding.blockModeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
                     binding.blockModeBtn.setBackgroundColor(getResources().getColor(R.color.primary));
                     binding.silentModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
                 }
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("isBlockMode", isBlockMode);
+                editor.putBoolean("isSilentMode", isSilentMode);
+                editor.commit();
             }
         });
 
@@ -88,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
                     binding.blockModeBtn.setBackgroundColor(getResources().getColor(R.color.btnBG));
                     binding.silentModeBtn.setBackgroundColor(getResources().getColor(R.color.primary));
                 }
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("isBlockMode", isBlockMode);
+                editor.putBoolean("isSilentMode", isSilentMode);
+                editor.commit();
             }
         });
 
@@ -116,12 +140,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         tabLayoutMediator.attach();
-    }
-
-    private void changeButtonColor(){
-
-
-
     }
 
     private void Call(String phoneNumber){

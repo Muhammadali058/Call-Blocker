@@ -1,6 +1,8 @@
 package com.example.callblocker.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,11 +93,23 @@ public class CallLogsAdapter extends RecyclerView.Adapter<CallLogsAdapter.ViewHo
         }else {
             holder.binding.expandableLayout.setVisibility(View.GONE);
         }
-        
+
+
         holder.binding.callBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Call", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + logs.getNumber()));
+                context.startActivity(intent);
+            }
+        });
+
+        holder.binding.messageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + logs.getNumber()));
+                intent.putExtra( "sms_body", "");
+                context.startActivity(intent);
             }
         });
 
